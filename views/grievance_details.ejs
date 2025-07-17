@@ -1,0 +1,33 @@
+<% layout('../layout/boilerplate') -%> 
+<body>
+  <div class="container mt-5">
+    <h3 class="mb-4">Grievance Details</h3>
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Name:</strong> <%= grievance.name || 'Anonymous' %></li>
+      <li class="list-group-item"><strong>Roll:</strong> <%= grievance.roll %></li>
+      <li class="list-group-item"><strong>Email:</strong> <%= grievance.email %></li>
+      <li class="list-group-item"><strong>Department:</strong> <%= grievance.department %></li>
+      <li class="list-group-item"><strong>Category:</strong> <%= grievance.category %></li>
+      <li class="list-group-item"><strong>Subject:</strong> <%= grievance.subject %></li>
+      <li class="list-group-item"><strong>Description:</strong> <%= grievance.description %></li>
+      <li class="list-group-item"><strong>Status:</strong> <%= grievance.status %></li>
+      <% if (grievance.filePath) { %>
+        <li class="list-group-item"><strong>File:</strong> <a href="/<%= grievance.filePath %>" target="_blank">View</a></li>
+      <% } %>
+    </ul>
+
+    <form action="/admin/update-status/<%= grievance._id %>" method="POST" class="mt-4">
+      <label for="status" class="form-label">Update Status</label>
+      <select name="status" class="form-select mb-3" required>
+        <option value="Submitted" <%= grievance.status === 'Submitted' ? 'selected' : '' %>>Submitted</option>
+        <option value="Under Review" <%= grievance.status === 'Under Review' ? 'selected' : '' %>>Under Review</option>
+        <option value="Resolved" <%= grievance.status === 'Resolved' ? 'selected' : '' %>>Resolved</option>
+        <option value="Rejected" <%= grievance.status === 'Rejected' ? 'selected' : '' %>>Rejected</option>
+      </select>
+      <button class="btn btn-success" type="submit">Update Status</button>
+    </form>
+
+    <a href="/admin" class="btn btn-secondary mt-3">Back to Dashboard</a>
+  </div>
+</body>
+</html>

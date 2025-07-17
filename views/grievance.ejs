@@ -1,0 +1,60 @@
+<% layout('../layout/boilerplate') -%> 
+
+<body>
+  <div class="container mt-5 mb-5">
+    <h2 class="mb-4 text-center">College Grievance Submission Form</h2>
+    
+    <form action="/submit-grievance" method="POST" enctype="multipart/form-data" class="border p-4 shadow rounded bg-light">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name <small>(Optional)</small></label>
+        <input type="text" name="name" class="form-control" placeholder="Your Name">
+      </div>
+
+      <div class="mb-3">
+        <label for="roll" class="form-label">Roll Number</label>
+        <input type="text" name="roll" class="form-control" placeholder="College Roll Number" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email ID</label>
+        <input type="email" name="email" class="form-control" placeholder="example@college.edu" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="department" class="form-label">Department / Year</label>
+        <input type="text" name="department" class="form-control" placeholder="ECE 2nd Year" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label">Grievance Category</label>
+        <select name="category" class="form-select" required>
+          <option value="">Select Category</option>
+          <option value="academic">Academic</option>
+          <option value="hostel">Hostel</option>
+          <option value="infrastructure">Infrastructure</option>
+          <option value="harassment">Harassment</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="subject" class="form-label">Subject</label>
+        <input type="text" name="subject" class="form-control" placeholder="Short Summary" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea name="description" class="form-control" rows="5" placeholder="Explain your grievance in detail" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="file" class="form-label">Upload Document/Image <small>(Optional)</small></label>
+        <input type="file" name="file" class="form-control">
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary">Submit Grievance</button>
+      </div>
+    </form>
+  </div>
+</body>

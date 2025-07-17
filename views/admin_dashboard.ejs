@@ -1,0 +1,34 @@
+<% layout('../layout/boilerplate') -%> 
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center">Admin Grievance Dashboard</h2>
+
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Roll</th>
+          <th>Subject</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% grievances.forEach(g => { %>
+          <tr>
+            <td><%= g.roll %></td>
+            <td><%= g.subject %></td>
+            <td><%= g.category %></td>
+            <td><span class="badge bg-info"><%= g.status %></span></td>
+            <td><%= g.createdAt.toDateString() %></td>
+            <td>
+              <a href="/admin/view/<%= g._id %>" class="btn btn-sm btn-primary">View</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
