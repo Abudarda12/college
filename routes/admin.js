@@ -43,4 +43,11 @@ router.post('/admin/update-status/:id', async (req, res) => {
   }
 });
 
+// Admin updates grievance status
+router.post('/admin/update-status/:id', async (req, res) => {
+  const { status } = req.body;
+  await Grievance.findByIdAndUpdate(req.params.id, { status });
+  res.redirect('/admin/dashboard'); // or wherever
+});
+
 module.exports = router;

@@ -14,6 +14,7 @@ const Admin = require('./models/admin');
 const bcrypt = require('bcrypt');
 const authRoutes = require('./routes/auth');
 const flash = require('connect-flash');
+const grievanceModel = require("./models/Grievance");
 
 // MongoDB connection
 mongoose.connect('mongodb://localhost:27017/grievanceDB', {
@@ -72,6 +73,7 @@ app.use((req, res, next) => {
 // Routes
 app.get('/', (req, res) => {
   res.render('grievance.ejs');
+  
 });
 app.use('/', grievanceRoutes);
 app.use('/', adminRoutes);

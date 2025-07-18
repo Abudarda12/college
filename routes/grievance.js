@@ -19,7 +19,7 @@ const upload = multer({ storage: storage });
 // POST route
 router.post("/submit-grievance", upload.single("file"), async (req, res) => {
   try {
-    const { name, roll, email, department, category, subject, description } =
+    const { name, roll, email, department, category, subject, outcome, description } =
       req.body;
 
     const grievance = new Grievance({
@@ -30,10 +30,11 @@ router.post("/submit-grievance", upload.single("file"), async (req, res) => {
       category,
       subject,
       description,
+      outcome,
       filePath: req.file ? req.file.path : null,
     });
-
-    await grievance.save();
+    
+    const savedGrievance = await grievance.save();
 
     // 📧 Faculty email map (you can also fetch this from DB)
     const facultyEmail = {
@@ -66,13 +67,28 @@ router.post("/submit-grievance", upload.single("file"), async (req, res) => {
       }
     });
 
-    res
-      .status(200)
-      .send("Grievance submitted successfully and faculty notified.");
+   res.render('grievance-submitted', { grievanceId: savedGrievance._id });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error submitting grievance");
   }
 });
+
+//Track routes
+router.get('/track', (req, res) => {
+  res.render('track');
+});
+
+router.post('/track', async (req, res) => {
+  try {
+    const grievance = await Grievance.findById(req.body.grievanceId);
+    if (!grievance) return res.render('track-result', { error: 'No grievance found with that ID.' });
+
+    res.render('track-result', { grievance });
+  } catch (err) {
+    res.render('track-result', { error: 'Invalid grievance ID.' });
+  }
+});
+
 
 module.exports = router;
