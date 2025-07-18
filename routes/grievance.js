@@ -1,23 +1,26 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const multer = require('multer');
-const Grievance = require('../models/Grievance');
+const multer = require("multer");
+const Grievance = require("../models/Grievance");
+const sendEmail = require("../utils/sendEmail");
+const transporter = require("../utils/mailer"); // Import the mailer transporter
 
 // Multer setup
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
+    cb(null, Date.now() + "-" + file.originalname);
+  },
 });
 const upload = multer({ storage: storage });
 
 // POST route
-router.post('/submit-grievance', upload.single('file'), async (req, res) => {
+router.post("/submit-grievance", upload.single("file"), async (req, res) => {
   try {
-    const { name, roll, email, department, category, subject, description } = req.body;
+    const { name, roll, email, department, category, subject, description } =
+      req.body;
 
     const grievance = new Grievance({
       name,
@@ -27,14 +30,48 @@ router.post('/submit-grievance', upload.single('file'), async (req, res) => {
       category,
       subject,
       description,
-      filePath: req.file ? req.file.path : null
+      filePath: req.file ? req.file.path : null,
     });
 
     await grievance.save();
-    res.send('<h3>Grievance Submitted Successfully!<br><a href="/">Submit Another</a></h3>');
+
+    // 📧 Faculty email map (you can also fetch this from DB)
+    const facultyEmail = {
+      academic: "abudardarajiya@gmail.com",
+      hostel: "abudardaansari66@gmail.com",
+      infrastructure: "abudardarajiya@gmail.com",
+    };
+    // Send email to faculty based on category
+    const facultyToEmail =
+      facultyEmail[req.body.category] || "abudardarajiya@gmail.com"; // Default email if category not found
+    // Send email to faculty
+    const mailOptions = {
+      from: `"${name}" <abudardaansari66@gmail.com>`, // User ka naam, lekin Gmail aapka hi rahega
+      to: facultyToEmail, // Category ke base par email jayegi
+      replyTo: email, // User ka email, taki reply kar sakein
+      subject: "New Grievance Submitted",
+      text: `Grievance by: ${name} (${email})\nDepartment: ${department}\nCategory: ${category}\nSubject: ${subject}\nDescription: ${description}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Email Error:", error);
+        req.flash(
+          "error",
+          "Grievance submitted, but failed to notify faculty."
+        );
+      } else {
+        console.log("Email sent: " + info.response);
+        req.flash("success", "Grievance submitted and faculty notified.");
+      }
+    });
+
+    res
+      .status(200)
+      .send("Grievance submitted successfully and faculty notified.");
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error submitting grievance');
+    res.status(500).send("Error submitting grievance");
   }
 });
 
