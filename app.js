@@ -102,14 +102,14 @@ app.use('/', adminRoutes);
 app.use('/', authRoutes);
 
 
-function saveAdmin(){
-  const addAdmin = new Admin({
-    username: "admin123",
-    password: "yourpassword"
-  })
-  const newadmin = addAdmin.save();
-  console.log(newadmin);
-}
+// function saveAdmin(){
+//   const addAdmin = new Admin({
+//     username: "admin123",
+//     password: "yourpassword"
+//   })
+//   const newadmin = addAdmin.save();
+//   console.log(newadmin);
+// }
 
 
 
