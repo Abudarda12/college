@@ -38,9 +38,11 @@ router.post("/submit-grievance", upload.single("file"), async (req, res) => {
 
     // 📧 Faculty email map (you can also fetch this from DB)
     const facultyEmail = {
-      academic: "abudardarajiya@gmail.com",
-      hostel: "abudardaansari66@gmail.com",
-      infrastructure: "abudardarajiya@gmail.com",
+      academic: "isha1607102@gmail.com",
+      hostel: "psiitd@yahoo.com",
+      infrastructure: "abudardaansari66@gmail.com",
+      tpo: "amritanshuraushan@gmail.com",
+      fees: "deepak77.dst2bih.gov.in"
     };
     // Send email to faculty based on category
     const facultyToEmail =
@@ -82,11 +84,11 @@ router.get('/track', (req, res) => {
 router.post('/track', async (req, res) => {
   try {
     const grievance = await Grievance.findById(req.body.grievanceId);
-    if (!grievance) return res.render('track-result', { error: 'No grievance found with that ID.' });
+    if (!grievance) return res.render('track-result', { grievance: null, error: 'No grievance found with that ID.' });
 
-    res.render('track-result', { grievance });
+    res.render('track-result', { grievance, error: null });
   } catch (err) {
-    res.render('track-result', { error: 'Invalid grievance ID.' });
+    res.render('track-result', { grievance: null, error: 'Invalid grievance ID.' });
   }
 });
 

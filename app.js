@@ -8,6 +8,7 @@ const ejsMate = require("ejs-mate")
 app.engine('ejs', ejsMate); 
 const adminRoutes = require('./routes/admin');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const Admin = require('./models/admin');
@@ -15,13 +16,18 @@ const bcrypt = require('bcrypt');
 const authRoutes = require('./routes/auth');
 const flash = require('connect-flash');
 const grievanceModel = require("./models/Grievance");
+require('dotenv').config();
+
+const db_url = process.env.ATLASDB_URL
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/grievanceDB', {
+mongoose.connect(db_url, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
+
+
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -32,12 +38,28 @@ app.use(express.static(path.join(__dirname, "public"))); // Serve static files f
 path.join(__dirname, "public");  
 
 
+// Connect MongoDB with session
+const store = MongoStore.create({
+  mongoUrl: db_url,
+  crypto: {
+    secret: "yourSecretKey"
+  },
+  touchAfter: 24 * 3600 // time period in seconds
+});
+store.on('error', function (e) {
+  console.log("Session Store Error", e);
+});
+
 // Session middleware
 app.use(session({
+  store: store,
   secret: 'yourSecretKey',
   resave: false,
   saveUninitialized: false
 }));
+
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -79,6 +101,15 @@ app.use('/', grievanceRoutes);
 app.use('/', adminRoutes);
 app.use('/', authRoutes);
 
+
+function saveAdmin(){
+  const addAdmin = new Admin({
+    username: "admin123",
+    password: "yourpassword"
+  })
+  const newadmin = addAdmin.save();
+  console.log(newadmin);
+}
 
 
 
