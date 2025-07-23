@@ -1,23 +1,26 @@
 <nav class="navbar navbar-expand-md bg-body-white border-bottom ">
   <div class="container-fluid">
-    <a class="navbar-brand" href="https://www.gecbhojpur.org/"><img src="image\FINAL_BHOJPUR_LOGO-2.jpg" alt="logo" style="height: 10vh;"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="https://www.gecbhojpur.org/"><img src="image/FINAL_BHOJPUR_LOGO-2.jpg" alt="logo"
+        style="height: 10vh;"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
+        <a class="nav-link" href="https://www.gecbhojpur.org/">Home
         <a class="nav-link" href="https://www.gecbhojpur.org/">About Us</a>
-        <a class="nav-link" href="https://www.gecbhojpur.org/">Admnistration</a>
-        <a href="#" class="nav-link">Academics</a>
-        <a href="#" class="nav-link">Department</a>
+ 
       </div>
       <div class="navbar-nav ms-auto">
-        <a href="/track" class="nav-link">Track Status</a>
-        <a href="/" class="nav-link">Grievance</a>
-        <a class="nav-link " aria-current="page" href="/admin/login">LogIn</a>
-        <a class="nav-link" href="/admin">Admin Dashboard</a>
-        <a class="nav-link" href="/admin/logout">Logout</a>
-        
+
+        <% if (!admin) { %>
+          <a href="/track" class="nav-link">Track Status</a>
+          <a href="/" class="nav-link">Grievance</a>
+          <a class="nav-link" href="/admin">Admin Dashboard</a>
+          <% } else { %>
+            <a class="nav-link" href="/admin/logout">Logout</a>
+            <% } %>
       </div>
     </div>
   </div>

@@ -34,12 +34,26 @@ router.get('/admin/view/:id',isAuthenticated, async (req, res) => {
 router.post('/admin/update-status/:id', async (req, res) => {
   try {
     await Grievance.findByIdAndUpdate(req.params.id, {
-      status: req.body.status
+      status: req.body.status,
+      remarks: req.body.remarks // Save remarks too
     });
-    res.redirect('/admin');
+    res.redirect('/admin/dashboard'); // Redirect to dashboard
   } catch (err) {
     console.error(err);
     res.status(500).send('Error updating status');
+  }
+});
+
+// Admin dashboard with filter by status
+router.get('/admin/dashboard', isAuthenticated, async (req, res) => {
+  try {
+    const statusFilter = req.query.status || '';
+    const query = statusFilter ? { status: statusFilter } : {};
+    const grievances = await Grievance.find(query).sort({ createdAt: -1 });
+    res.render('admin_dashboard', { grievances, statusFilter });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
   }
 });
 

@@ -41,7 +41,7 @@ router.post("/submit-grievance", upload.single("file"), async (req, res) => {
       academic: "isha1607102@gmail.com",
       hostel: "psiitd@yahoo.com",
       infrastructure: "abudardaansari66@gmail.com",
-      tpo: "amritanshuraushan@gmail.com",
+      tpo: "tpogecbhojpur@gmail.com",
       fees: "deepak77.dst2bih.gov.in"
     };
     // Send email to faculty based on category

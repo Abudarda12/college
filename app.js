@@ -91,6 +91,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Middleware to make admin available in all views
+app.use((req, res, next) => {
+  res.locals.admin = req.user; // or req.session.admin
+  next();
+});
 
 // Routes
 app.get('/', (req, res) => {

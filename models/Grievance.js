@@ -9,7 +9,8 @@ const grievanceSchema = new mongoose.Schema({
   subject: { type: String, required: true },
   description: { type: String, required: true },
   filePath: { type: String },
-  status: { type: String, default: 'Submitted' },  // Submitted, Under Review, Resolved, Rejected
+  status: { type: String, default: 'Pending' }, 
+  remarks: { type: String, default: '' }, // New field for remarks
   createdAt: { type: Date, default: Date.now }
 });
 
