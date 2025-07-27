@@ -3,6 +3,14 @@
   <div class="container mt-5">
     <h2 class="mb-4 text-center">Admin Grievance Dashboard</h2>
 
+      <div class="mb-3 text-center">
+      <a href="/admin/dashboard" class="btn btn-secondary btn-sm">All</a>
+      <a href="/admin/dashboard?status=Pending" class="btn btn-info btn-sm">Pending</a>
+      <a href="/admin/dashboard?status=Under%20Review" class="btn btn-warning btn-sm">Under Review</a>
+      <a href="/admin/dashboard?status=Resolved" class="btn btn-success btn-sm">Resolved</a>
+      <a href="/admin/dashboard?status=Rejected" class="btn btn-danger btn-sm">Rejected</a>
+    </div>
+
     <table class="table table-bordered table-hover">
       <thead class="table-dark">
         <tr>

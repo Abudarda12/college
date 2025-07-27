@@ -17,13 +17,16 @@
     </ul>
 
     <form action="/admin/update-status/<%= grievance._id %>" method="POST" class="mt-4">
+      
       <label for="status" class="form-label">Update Status</label>
       <select name="status" class="form-select mb-3" required>
-        <option value="Submitted" <%= grievance.status === 'Submitted' ? 'selected' : '' %>>Submitted</option>
+        <option value="Pending" <%= grievance.status === 'Pending' ? 'Pending' : '' %>>Pending</option>
         <option value="Under Review" <%= grievance.status === 'Under Review' ? 'selected' : '' %>>Under Review</option>
         <option value="Resolved" <%= grievance.status === 'Resolved' ? 'selected' : '' %>>Resolved</option>
         <option value="Rejected" <%= grievance.status === 'Rejected' ? 'selected' : '' %>>Rejected</option>
       </select>
+      <label for="remarks" class="form-label">Remarks:</label>
+      <textarea name="remarks" class="form-control mb-3" rows="3" placeholder="Add remarks here..."></textarea>
       <button class="btn btn-success" type="submit">Update Status</button>
     </form>
 
