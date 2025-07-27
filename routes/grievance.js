@@ -38,8 +38,8 @@ router.post("/submit-grievance", upload.single("file"), async (req, res) => {
 
     // 📧 Faculty email map (you can also fetch this from DB)
     const facultyEmail = {
-      academic: "isha1607102@gmail.com",
-      hostel: "psiitd@yahoo.com",
+      academic: "rishiraj00346@gmail.com",
+      hostel: "kishlaykaushik555@gmail.com",
       infrastructure: "abudardaansari66@gmail.com",
       tpo: "tpogecbhojpur@gmail.com",
       fees: "deepak77.dst2bih.gov.in"
@@ -53,8 +53,26 @@ router.post("/submit-grievance", upload.single("file"), async (req, res) => {
       to: facultyToEmail, // Category ke base par email jayegi
       replyTo: email, // User ka email, taki reply kar sakein
       subject: "New Grievance Submitted",
-      text: `Grievance by: ${name} (${email})\nDepartment: ${department}\nCategory: ${category}\nSubject: ${subject}\nDescription: ${description}`,
+      text: `Grievance by: ${name} (${email})\nDepartment: ${department}\nCategory: ${category}\nSubject: ${subject}
+      \n ID: ${savedGrievance._id}\nDescription: ${description}`,
     };
+
+    const mailStudent = {
+      from: ` <abudardaansari66@gmail.com>`, // User ka naam, lekin Gmail aapka hi rahega
+      to: email, // User ka email
+      subject: "Grievance Submitted Successfully",
+      text: `Your grievance with ID ${savedGrievance._id} has been submitted successfully.\nWe will notify you once it is addressed.`,
+    };
+    
+    transporter.sendMail(mailStudent, (error, info) => {
+      if (error) {
+        console.error("Email Error:", error);
+        req.flash("error", "Grievance submitted, but failed to notify student.");
+      } else {
+        console.log("Email sent: " + info.response);
+        req.flash("success", "Grievance submitted and student notified.");
+      }
+    });
 
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {

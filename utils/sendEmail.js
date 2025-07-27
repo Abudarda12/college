@@ -16,6 +16,15 @@ const sendEmail = async ({ to, subject, text }) => {
     text,
   };
 
+  const mailStudent = {
+    from: '"College Grievance" <yourcollegeemail@gmail.com>',
+    to,
+    subject,
+    text,
+  };
+
+  await transporter.sendMail(mailStudent);
+
   await transporter.sendMail(mailOptions);
 };
 

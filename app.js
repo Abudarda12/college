@@ -21,10 +21,7 @@ require('dotenv').config();
 const db_url = process.env.ATLASDB_URL
 
 // MongoDB connection
-mongoose.connect(db_url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log('MongoDB connected'))
+mongoose.connect(db_url, ).then(() => console.log('MongoDB connected'))
   .catch(err => console.error(err));
 
 
