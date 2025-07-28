@@ -6,8 +6,10 @@
   "name": "college",
   "version": "1.0.0",
   "description": "Enquire and suggestion page of GEC, Bhojpur",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
